@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Customer;
+import entity.Order1;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,21 +36,28 @@ public class CustomerLogin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
             try{
+                HttpSession session = request.getSession();
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 
                 List<Customer> customerList = getAllAccounts();
                 Customer customer = new Customer();
+               
+                
                 
                 //loop for found customer from customer list
                 for (int i = 0; i < customerList.size(); i++) {
                     //if username and password match with one of the customer on list
-                    if (customerList.get(i).getUsername().equalsIgnoreCase(username) && customerList.get(i).getPassword().equalsIgnoreCase(password)) {
+                    if (customerList.get(i).getUsername().equalsIgnoreCase(username) && customerList.get(i).getPassword().equalsIgnoreCase(password) && customerList.get(i).getStatus() == 'A') {
                         
-//                        customer.setCustomerid(customerList.get(i).getCustomerid());
-//                        customer.setUsername(username);
-//                        customer.setPassword(password);
-//                        customer.setEmail(customerList.get(i).getEmail());
+                        customer.setCustomerid(customerList.get(i).getCustomerid());
+                        customer.setUsername(username);
+                        customer.setPassword(password);
+                        customer.setEmail(customerList.get(i).getEmail());
+                        customer.setPhonenumber(customerList.get(i).getPhonenumber());
+                        customer.setAddress(customerList.get(i).getAddress());
+                        
+                       
                         accFound = true;
                     }
                 }
@@ -57,7 +66,9 @@ public class CustomerLogin extends HttpServlet {
                     
                     response.sendRedirect("customerLoginError.jsp");
                 }else{
+                    session.setAttribute("customerAcc", customer);
                     response.sendRedirect("index.html");
+                    
                     accFound = false;
                     
                 }
