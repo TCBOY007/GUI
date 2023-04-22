@@ -1,0 +1,72 @@
+<%-- 
+    Document   : orderCart
+    Created on : Apr 15, 2023, 9:59:46 PM
+    Author     : chenc
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="css/header.css">
+    </head>
+    <body>
+
+        <!-- this is header  -->
+        <div class=e8_39>
+
+            <!-- This is background design ( column grid )  -->
+            <div class=e18_58>
+                <div class="e18_44"></div>
+                <div class="e18_52"></div>
+                <div class="e18_53"></div>
+                <div class="e18_54"></div>
+                <div class="e18_45"></div>
+                <div class="e18_57"></div>
+                <div class="e18_46"></div>
+                <div class="e18_47"></div>
+                <div class="e18_48"></div>
+                <div class="e18_49"></div>
+                <div class="e18_50"></div>
+                <div class="e18_51"></div>
+            </div>
+
+            <span class="e1_19">
+                <a href="index.jsp">Home</a>
+            </span>
+
+
+            <span  class="e2_2">
+                <a href="product.jsp">Shop</a>
+            </span>
+
+            <span  class="e2_7">
+                <a href="#">About Us</a>
+            </span>
+
+            <div class="e2_10">
+                <a href="#">
+                    <img src="images/263142_1.png" width="40">
+                </a>
+            </div>
+
+            <div class="e2_4">
+                <a href="#">
+                    <img src="images/logo.png">
+                </a>
+
+            </div>
+            <a href="#">
+                <div class=e2_9><span  class="e2_8">Login / SignUp</span></div>
+            </a>
+
+            <div class="e2_17"></div>
+        </div>
+
+
+
+
+    </body>
+</html>
