@@ -4,6 +4,9 @@
     Author     : chenc
 --%>
 
+
+<%@page import="java.io.*"%>
+<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,55 +18,83 @@
 
     </head>
     <body>
-        <div class=e1_11 >
 
-            <div class=e8_39><span  class="e1_19">Home</span><span  class="e2_2">Shop </span><span  class="e2_7">About Us</span>
-                <div class="e2_10">
-                    <img src="images/263142_1.png" width="40">
+        <!-- this is header  -->
+       <jsp:include page="header.jsp" />
+        <div class=e1_11 >
+            
+              <div class=h18_58>
+                <div class="h18_44"></div>
+                <div class="h18_52"></div>
+                <div class="h18_53"></div>
+                <div class="h18_54"></div>
+                <div class="h18_45"></div>
+                <div class="h18_57"></div>
+                <div class="h18_46"></div>
+                <div class="h18_47"></div>
+                <div class="h18_48"></div>
+                <div class="h18_49"></div>
+                <div class="h18_50"></div>
+                <div class="h18_51"></div>
+            </div>
+
+            <!-- This is Home page  -->
+            <div class=e34_96>
+                <div class=e34_95>
+
+                    <span  class="e22_61">Find the BEST BOOK for You</span>
+
+                    <div class=e22_67>
+                        <a href="#">
+                            <span  class="e22_68">
+                                Shop Now
+                            </span>
+                        </a>
+                    </div>
+
+
+
                 </div>
-                <div class="e2_4">
-                    <img src="images/logo.png">
-                </div>
-                <div class=e2_9><span  class="e2_8">Login / SignUp</span></div>
-                <div class="e2_17"></div>
             </div>
             
+           
             
-            <div class=e18_58>
-                <div class="e18_44"></div>
-                <div class="e18_52"></div>
-                <div class="e18_53"></div>
-                <div class="e18_54"></div>
-                <div class="e18_45"></div>
-                <div class="e18_57"></div>
-                <div class="e18_46"></div>
-                <div class="e18_47"></div>
-                <div class="e18_48"></div>
-                <div class="e18_49"></div>
-                <div class="e18_50"></div>
-                <div class="e18_51"></div>
+            <!-- This is Top 3 product -->
+            <div class=e40_4>
+                <div class=e34_86>
+
+                    <span class="e34_93" > 
+                        <a href="#""> more -> </a> 
+                    </span>
+
+                    <div class="e22_74">
+                        <a href="#">
+                            <img src="images/background.png">
+                        </a>
+                    </div><span  class="e22_73">Top 3 Product</span>
+                    <div class="e34_87">
+                        <a href="#">
+                            <img src="images/background.png">
+                        </a>
+                    </div>
+                    <div class="e34_88">
+                        <a href="#">
+                            <img src="images/background.png">
+                        </a>
+                    </div>
+                    <div class="e34_83"></div><span  class="e40_2">Product1</span>
+                    <div class="e34_85"></div>
+                    <div class="e34_84"></div><span  class="e40_8">Product2</span><span  class="e40_9">Product3</span>
+                </div>
             </div>
-            
-            
-            <div class=e8_40>
-                
-                <div class="e4_19">
-                    <img src="images/logo.png">
-                </div><span  class="e4_21">Our Link</span><span  class="e4_25">Get in Touch With Us</span><span  class="e4_22">Home</span><span  class="e4_23">Shop Now</span><span  class="e4_24">About us</span><span  class="e8_34">Login / Sign Up</span>
-                <div class="e7_30">
-                    <img src="images/email.png" width="30">
-                </div>
-                <div class="e7_32">
-                    <img src="images/gps.png" width="30">
-                </div>
-                <div class="e7_33">
-                    <img src="images/phone.png" width="30">
-                </div>
-                <span  class="e8_36">21-07, PV15 Platinum Lake  Condominium
-                    Taman Danau Kota, 53300 Kuala Lumpur,</span><span  class="e8_37">Mr Tung Chen Chung
-                    011-55035680</span><span  class="e8_38">chenchungtung@gmail.com</span>
-            </div>
+  
         </div>
+        
+        <!-- This is footer -->
+        <jsp:include page="footer.jsp" />
+    
+
+
     </body>
 </html>
 
