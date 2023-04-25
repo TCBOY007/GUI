@@ -18,7 +18,7 @@
      <link href="CustomerRegister.css" type="text/css" rel="stylesheet" />
    </head>
 <body>
-    <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+
     
   <div class="container">
     <div class="title">Registration</div>
@@ -26,7 +26,7 @@
 
       <!-- Form -->
       <form class="customerReg" action="Register" name="customerRegForm" onsubmit="return Validate()">
-  
+          
         <div class="user-details">
           <div class="input-box">
             <div id="username_div">
@@ -62,7 +62,7 @@
           <div class="input-box">
             <div id="password_div">
               <span class="details">Password</span>
-              <input type="text" name="password" id="password" >
+              <input type="password" name="password" id="password" >
               <div id="password_error"></div>
             </div>
             
@@ -70,12 +70,16 @@
           <div class="input-box">
             <div id="password2_div">
               <span class="details">Confirm Password</span>
-              <input type="text" name="password2" id="password2">
+              <input type="password" name="password2" id="password2">
               <div id="password2_error"></div>
             </div>
             
           </div>
-        </div>
+            
+         </div>
+             
+          <input style="margin-bottom: 5px; " type="checkbox" onclick="viewPassword()"><span style="margin: 10px;">Show Password</span>
+        
         <div class="gender-details">
           <input type="radio" name="gender" id="dot-1" value="Male">
           <input type="radio" name="gender" id="dot-2" value="Female">
@@ -106,12 +110,17 @@
   var phone = document.forms['customerRegForm']['phone'];
   var password = document.forms['customerRegForm']['password'];
   var password_confirm = document.forms['customerRegForm']['password2'];
+   
   // SELECTING ALL ERROR DISPLAY ELEMENTS
   var name_error = document.getElementById('name_error');
   var email_error = document.getElementById('email_error');
   var password_error = document.getElementById('password_error');
   var password2_error = document.getElementById('password2_error');
-
+  
+  const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const phonePattern = /^01\d{1}\d{7}$/;
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}$/;
+  
 // SETTING ALL EVENT LISTENERS
 username.addEventListener('blur', nameVerify, true);
 email.addEventListener('blur', emailVerify, true);
@@ -144,6 +153,22 @@ function Validate() {
     email.focus();
     return false;
   }
+    if (!emailPattern.test(email.value)) {
+        email.style.border = "1px solid red";
+        document.getElementById('email_div').style.color = "red";
+        email_error.textContent = "Invalid email address";
+        email.focus();
+        return false;
+  }
+  
+    if (!phonePattern.test(phone.value)) {
+        phone.style.border = "1px solid red";
+        document.getElementById('phone_div').style.color = "red";
+        phone_error.textContent = "Invalid phone number";
+        phone.focus();
+        return false;
+    }
+    
   // validate password
   if (password.value == "") {
     password.style.border = "1px solid red";
@@ -156,11 +181,19 @@ function Validate() {
   // check if the two passwords match
   if (password.value != password_confirm.value) {
     password.style.border = "1px solid red";
-    document.getElementById('password2_div').style.color = "red";
-    password_confirm.style.border = "1px solid red";
-    password_error.innerHTML = "The two passwords do not match";
+    document.getElementById('password_div').style.color = "red";
+    password_confirm.style.border = "1px solid red"
+    password_error.textContent = "The two passwords do not match";
     return false;
   }
+  
+  if (!passwordPattern.test(password.value)) {
+  password.style.border = "1px solid red";
+  document.getElementById('password_div').style.color = "red";
+  password_error.textContent = "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long";
+  password.focus();
+  return false;
+}
 }
 // event handler functions
 function nameVerify() {
@@ -189,22 +222,28 @@ function passwordVerify() {
   }
   if (password.value === password_confirm.value) {
   	password.style.border = "1px solid #5e6e66";
-  	document.getElementById('password2_div').style.color = "#5e6e66";
+  	document.getElementById('password2_div').style.color = red;
   	password_error.innerHTML = "";
   	return true;
   }
 }
 </script>
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet" href="alert/dist/sweetalert.css">
-<script type="text/javascript">
-    var status = document.getElementById("status").value;
-    if(status === "success"){
-        swal("Congratulations!","Your account created successfully!","success");
-        
-    }
-</script>
+ <script>
+        function viewPassword() {
+            //View Password Variables
+            var password = document.getElementById("password");
+            var password2 = document.getElementById("password2");
+            if (password.type == "password" && password2.type == "password") {
+                password.type = "text";
+            } else {
+                password.type = "password";
+            }
+        }
+    </script>
+    
+
 </body>
 </html>
+
 
