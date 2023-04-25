@@ -44,7 +44,7 @@
       Sorry, Your username or email has been created.  
     </p>
     <a href="CustomerRegister.jsp" id="contBtn1">Register Again</a>
-    <a href="index.html" id="contBtn2">Back to Home Page</a>
+    <a href="index.html" id="contBtn2">Home</a>
   </div>
 </div>
 <!-- partial -->
