@@ -53,9 +53,13 @@ public class CustomerRegister extends HttpServlet {
         String phoneNumber = request.getParameter("phone");
         String address = request.getParameter("address");
         String password = request.getParameter("password");
+        String password2 = request.getParameter("password2");
+        
         String gender = request.getParameter("gender");
         Timestamp createDate = new Timestamp(System.currentTimeMillis());
         Timestamp updateDate = new Timestamp(System.currentTimeMillis());
+        // A- acive D - deleted
+        char accStatus = 'A';
         RequestDispatcher rd = null;
         boolean status = true;
         //search customer whether existing
@@ -63,7 +67,7 @@ public class CustomerRegister extends HttpServlet {
         
         if(!customerList.isEmpty()){
             for(Customer customer:customerList){
-                if(customer.getUsername().equals(username) || customer.getEmail().equals(email)){
+                if(customer.getUsername().equals(username) || customer.getEmail().equals(email) ){
                     status = false;
                     request.setAttribute("failed", status);
                     response.sendRedirect("CustomerRegisterError.jsp");
@@ -74,7 +78,7 @@ public class CustomerRegister extends HttpServlet {
             }
         }
         
-            Customer customer = new Customer(customerID,username,password,email,phoneNumber,address,gender,createDate,updateDate);
+            Customer customer = new Customer(customerID,username,password,email,phoneNumber,address,gender,createDate,updateDate,accStatus);
             utx.begin();
             em.persist(customer);
             utx.commit();
@@ -151,3 +155,4 @@ public class CustomerRegister extends HttpServlet {
     }// </editor-fold>
 
 }
+
