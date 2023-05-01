@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="java.util.Base64"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.*"%>
@@ -26,7 +27,13 @@
     </head>
     <body>
         <%
-            List<Product> productList = (List)session.getAttribute("productList");
+            List<Product> productList = (List) session.getAttribute("productList");
+
+            List<Product> searchList = (List) session.getAttribute("searchtList");
+
+            if (searchList != null) {
+                productList = searchList;
+            }
         %>
 
         <!-- this is header  -->
@@ -43,33 +50,42 @@
                 </div>
 
                 <div class="search">
-                    <form id="searchForm" action="servlets/ProductServlet" method="post">
-                        <input type="text" class="search-bar" name="search" name="searchQuery" placeHolder="Search...">
+                    <form id="searchForm" action="SearchProductByName" method="post">
+                        <input type="text" class="search-bar" name="search" placeHolder="Search...">
                         <button type="submit" class="searchButton">Search</button>
                     </form>
                 </div>
 
                 <div class="row">
 
-                    <% if(productList != null ) {%>
-                    
-                     <% for (Product product : productList) { %>
+                    <% if (productList != null) {%>
+
+                    <% for (Product product : productList) {%>
                     <div class="col 14 m3 s14 offset-m0 offset-14">
                         <div class="product-card">
                             <div class="card  z-depth-4">
                                 <div class="card-image">
                                     <div class="btn-floating btn-large price waves-effect waves-light brown darken-3"><%= product.getProductid()%></div>
-                                    <img src="https://res.cloudinary.com/landry-bete/image/upload/v1488769144/dessert14_trnhnj.jpg" alt="product-img">
-                                    <span class="card-title">
-                                        <span>
-                                           <%= product.getBookname() %>
-                                        </span>
+                                    <a href="ProductDetail?productId=<%=product.getProductid()%>">
+                                        <%
                                             
+                                            byte[] imageBytes = product.getImage(); 
+                                            String base64Image = Base64.getEncoder().encodeToString(imageBytes); 
+                                            
+                                        %>
+                                        <img src="data:image/jpeg;base64,<%= base64Image%>">   
+                                        
+                                    </a>
+                                    <span class="card-title">
+
+                                        <%= product.getBookname()%>
+
+
                                     </span>
                                 </div>
                                 <ul class="card-action-buttons">
                                     <li>
-                                        <a href="AddToCart?productid=<%= product.getProductid() %>" id="buy" class="btn-floating waves-effect waves-light blue"><i class="material-icons buy">add_shopping_cart</i></a>
+                                        <a href="AddToCart?productid=<%= product.getProductid()%>" class="btn-floating waves-effect waves-light blue"><i class="material-icons buy">add_shopping_cart</i></a>
                                     </li>
                                 </ul>
                                 <div class="card-content">
@@ -82,14 +98,14 @@
                                             <br/>
                                             <p>
                                                 <strong>Price:</strong> <br/>
-                                                RM <%= String.format("%.2f", product.getPrice()) %>
+                                                RM <%= String.format("%.2f", product.getPrice())%>
                                             </p>
                                         </div>
 
                                     </div>
                                     <div class="row">
                                         <div style="width: 95%; margin: auto;">
-                                            <div class="chip"><%= product.getLanguage() %></div>
+                                            <div class="chip"><%= product.getLanguage()%></div>
                                             <div class="chip"><%= product.getGenre()%></div>
 
                                         </div>
@@ -99,10 +115,10 @@
                         </div>
                     </div>
                     <% }%>
-                    
-                    <% } %>
 
-                   
+                    <% }%>
+
+
 
 
 
