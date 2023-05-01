@@ -1,0 +1,298 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 15, 2023, 10:47:27 PM
+    Author     : chook
+*/
+
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+td{
+    padding: 50px;
+}
+
+.table-details {
+    margin-left: 160px;
+    background-color: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+}
+
+#title-word{
+    font-size: 23px;
+}
+
+#title-word th{
+    padding: 8px;
+}
+
+#shopping-cart-word{
+    font-size: 50px;
+    margin: 0px;
+    margin-bottom: 10px;
+    margin-left: 15cm;
+}
+
+
+
+
+.product-details{
+    padding-right: 70px;
+}
+
+.single-product-details{
+    display: flex;
+}
+
+.single-product-details div{
+    margin-left: 50px;
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+.quantity-details button,input{
+    height: 30px;
+    width: 50px;
+}
+
+.product p,span{
+    font-size: 20px;
+}
+
+.product img {
+    border: 4px solid black;
+}
+
+#disountForDelivery {
+    background-color: yellow;
+    font-size: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#payment {
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    width: 35cm;
+    margin-bottom: 20px;
+    margin-left: 210px;
+    width: fit-content;
+ }
+
+.each-method{
+    display: flex;
+    margin: 10px;
+}
+
+.each-method i,span{
+    font-size: 20px;
+    padding-left: 5px;
+    margin-top: 3px;
+}
+
+
+.each-method input{
+    height: 25px;
+    width: 25px;
+}
+
+.pay-method{
+    border: 1px solid black;
+    margin: 10px;
+    padding: 5px;
+    padding-right: 18px;
+    margin-top: 50px;;
+    margin-bottom: auto;
+    background-color: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+}
+
+.pay-details{
+    border: 1px solid black;
+    margin: 10px;
+    margin-right: 20px;
+    padding: 25px;
+    width: 500px;
+    margin-bottom: auto;
+    margin-top: 25px;
+    background-color: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-details{
+    padding: 15px;
+}
+
+.cardInfo{
+    width: 150pt;
+}
+
+
+.parent-div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Arrange input containers in 2 columns */
+    gap: 30px; /* Add gap between input containers */
+    width: 400px; /* Set width of parent div as needed */
+    margin: 0 auto; /* Center the parent div */
+    margin-top: 20px;
+}
+
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+    width: 200px; /* Set width of input container */
+}
+
+.label {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    color: #999;
+    pointer-events: none; /* Disable pointer events on label to allow input interaction */
+    transition: top 0.2s, left 0.2s, font-size 0.2s;
+    z-index: 1;
+}
+
+.input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #999;
+    transition: width 0.2s;
+    z-index: 1;
+}
+
+.input:focus ~ .underline {
+    width: 100%; /* Set underline width to 100% on focus */
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+    top: -20px;
+    left: 0;
+    font-size: 15px;
+    color: dodgerblue;
+
+}
+
+.input:focus,
+.input:not(:placeholder-shown) {
+    border: none;
+}
+
+.input::placeholder {
+    color: transparent; /* Hide placeholder text */
+}
+
+.input:focus::placeholder,
+.input:not(:placeholder-shown)::placeholder {
+    color: #999; /* Show placeholder text on focus or when input is not empty */
+}
+
+
+
+.payment-summary {
+    border: 1px solid #ccc;
+    padding: 30px;
+    width: 250px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.summ {
+    display: block;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.value {
+    display: block;
+    font-size: 24px;
+    color: #000;
+}
+
+.pay-button {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    height: 40px;
+}
+
+.pay-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.price::before,
+.tax::before,
+.total-price::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #ddd;
+    margin-bottom: 5px;
+}
+
+.payment-summary:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.payment-summary::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.payment-summary:hover::after {
+    opacity: 1;
+}
+
