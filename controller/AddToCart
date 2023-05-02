@@ -3,16 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package servlets;
+
 import domain.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -20,6 +31,11 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "AddToCart", urlPatterns = {"/AddToCart"})
 public class AddToCart extends HttpServlet {
+
+    @PersistenceContext
+    EntityManager em;
+    @Resource
+    UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,24 +50,80 @@ public class AddToCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            ArrayList<OrderCart> cartList = new ArrayList<>();
+
+            //get the cartID
+            //get the quantity
+            //calcualte the subtotal     
+            //get the product price
+            //get customer ID
+            Customer customer = getCurrentLoginCustomer();
+
+            // get the product id from the request parameter
+            String prodId = request.getParameter("productid");
+
+            // retrieve the Product object from database based on prodId
+            ProductService ps = new ProductService(em);
+            Product product = ps.findProductById(prodId);
+
+            // get the price from the product
+            double prodPrice = product.getPrice();
             
-            String id = request.getParameter("productid");
+            
+            // create a new OrderCart object for the product
             OrderCart cart = new OrderCart();
-            cart.setCartid(id);
+            cart.setProductid(product);
+
+            String temProductId = createCartID();
+            cart.setCartid(temProductId);
             cart.setQuantity(1);
-            
+            cart.setPrice(prodPrice);
+            cart.setCustomerid(customer);
+
+            // get the cart list from the session
             HttpSession session = request.getSession();
-        
-            ArrayList<OrderCart> cart_list = (ArrayList<OrderCart>) session.getAttribute("cart-list"); 
-            
-            if(cart_list == null){
-                cartList.add(cart);
-                session.setAttribute("cart-list", cartList);
-                out.println("sesion created and added the list");
+
+            // add the new cart to the cart list and save to session
+            // save the cart list to the database using JPA
+            OrderCartService service = new OrderCartService(em);
+            try {
+                utx.begin();
+                service.saveOrderCartList(cart);
+                utx.commit();
+            } catch (Exception ex) {
+
             }
+            try {
+                Thread.sleep(1000); // wait for 1 seconds
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            response.sendRedirect("product.jsp");
+
         }
-        
+    }
+
+    public Customer getCurrentLoginCustomer() {
+
+        return new Customer("C001");
+
+    }
+
+    private String createCartID() {
+
+        List<OrderCart> tempOrderCartList = em.createNamedQuery("OrderCart.findAll").getResultList();
+        //if the list is not empty then can create cart id 
+        if (!tempOrderCartList.isEmpty()) {
+
+            char firstIndex = tempOrderCartList.get(tempOrderCartList.size() - 1).getCartid().charAt(2);
+            char secondIndex = tempOrderCartList.get(tempOrderCartList.size() - 1).getCartid().charAt(3);
+            char thirdIndex = tempOrderCartList.get(tempOrderCartList.size() - 1).getCartid().charAt(4);
+
+            String tempCartID = String.valueOf(firstIndex) + String.valueOf(secondIndex) + String.valueOf(thirdIndex);
+            int nextCartID = Integer.parseInt(tempCartID) + 1;
+            return "Ca" + String.format("%03d", nextCartID);
+        } else {
+            return "Ca" + String.format("%03d", 1);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
