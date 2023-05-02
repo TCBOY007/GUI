@@ -68,7 +68,7 @@ public class paymentProceed extends HttpServlet {
             PaymentService paymentService = new PaymentService(em);
             List<Payment> allPayment = paymentService.findAll();
             int allPaymentSize = allPayment.size();
-            String latestPaymentID = String.format("P%03d", allPaymentSize + 1);
+            String latestPaymentID = String.format("PA%03d", allPaymentSize + 1);
 
             Payment payment = new Payment();
             payment.setCustomerid(custInfo);
