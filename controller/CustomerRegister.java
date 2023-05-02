@@ -155,4 +155,3 @@ public class CustomerRegister extends HttpServlet {
     }// </editor-fold>
 
 }
-

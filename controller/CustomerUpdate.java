@@ -6,18 +6,16 @@ package controller;
 
 import entity.Customer;
 import entity.CustomerService;
-import entity.OrderService;
-import entity.Ordertable;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,48 +28,61 @@ import javax.transaction.UserTransaction;
  *
  * @author xinying
  */
-@WebServlet(name = "CustomerProfile", urlPatterns = {"/CustomerProfile"})
-public class CustomerProfile extends HttpServlet {
+@WebServlet(name = "customerUpdate", urlPatterns = {"/customerUpdate"})
+public class CustomerUpdate extends HttpServlet {
 
     @PersistenceContext
     EntityManager em;
     @Resource
     UserTransaction utx;
+    private String accFound = "failed";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
         try{
-            
+            CustomerService custService = new CustomerService(em);
             HttpSession session = request.getSession();
-            //get the customer from jsp
-           Customer customer = (Customer) session.getAttribute("customerAcc");
-          
-           if(customer == null){
-                response.sendRedirect("CustomerLogin.jsp");
-                
-            }else{
-                CustomerService custService = new CustomerService(em);
-                Customer showCustomer = custService.findByCustomerid(customer.getCustomerid());
-                session.setAttribute("customer", showCustomer);
-               
-                List<Ordertable> orderList = getAllOrders();
-                
-                session.setAttribute("orderList", orderList);
-                response.sendRedirect("CustomerProfile.jsp");
+            Customer customer = (Customer) session.getAttribute("customer");
+            
+            String customerID = customer.getCustomerid();
+            String gender = customer.getGender();
+            char status = 'A';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            Date createDate = customer.getCreateDate();
+
+            String username = customer.getUsername();
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phone");
+            
+            String password = request.getParameter("pw1");
+            if(password.isEmpty()){
+                password = request.getParameter("defaultpw");
+            }
+            String address = request.getParameter("address");
+            Timestamp updateDate = new Timestamp(System.currentTimeMillis());
+    
+           
+            List<Customer> customerList = custService.findAll();
+            if(!customerList.isEmpty()){
+                Customer updCustomer = new Customer(customerID,username,password,email,phoneNumber,address,gender,createDate,updateDate,status);
+
+               utx.begin();
+               custService.updateCustomerProfile(updCustomer);
+               utx.commit();
+               session.setAttribute("message", "success");
+               session.setAttribute("customer",updCustomer);
+               response.sendRedirect("CustomerUpdate.jsp");
             }
             
-        }catch (Exception ex) {
-                Logger.getLogger(CustomerProfile.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          
-       }
-       public List<Ordertable> getAllOrders() {
-        List orderList = em.createNamedQuery("Ordertable.findAll").getResultList();
-        return orderList;
+            request.setAttribute("message", "failed");
+            response.sendRedirect("CustomerUpdate.jsp");
+           
+           
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerUpdate.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

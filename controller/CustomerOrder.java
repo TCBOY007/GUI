@@ -5,73 +5,71 @@
 package controller;
 
 import entity.Customer;
-import entity.CustomerService;
-import entity.OrderService;
 import entity.Ordertable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.transaction.UserTransaction;
 
 /**
  *
  * @author xinying
  */
-@WebServlet(name = "CustomerProfile", urlPatterns = {"/CustomerProfile"})
-public class CustomerProfile extends HttpServlet {
+@WebServlet(name = "CustomerOrder", urlPatterns = {"/CustomerOrder"})
+public class CustomerOrder extends HttpServlet {
 
     @PersistenceContext
     EntityManager em;
-    @Resource
-    UserTransaction utx;
+    private boolean accFound = false;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        try{
-            
-            HttpSession session = request.getSession();
-            //get the customer from jsp
-           Customer customer = (Customer) session.getAttribute("customerAcc");
-          
-           if(customer == null){
-                response.sendRedirect("CustomerLogin.jsp");
+            try{
+                HttpSession session = request.getSession();
+
                 
-            }else{
-                CustomerService custService = new CustomerService(em);
-                Customer showCustomer = custService.findByCustomerid(customer.getCustomerid());
-                session.setAttribute("customer", showCustomer);
-               
                 List<Ordertable> orderList = getAllOrders();
+                Ordertable order = new Ordertable();
+                 Customer customer = (Customer) session.getAttribute("customerAcc");
                 
-                session.setAttribute("orderList", orderList);
-                response.sendRedirect("CustomerProfile.jsp");
-            }
-            
-        }catch (Exception ex) {
-                Logger.getLogger(CustomerProfile.class.getName()).log(Level.SEVERE, null, ex);
+                
+                //loop for found order from order list
+                for (int i = 0; i < orderList.size(); i++) {
+                    //if username and password match with one of the order on list
+                     if(orderList.get(i).getCustomerid().equals(customer.getCustomerid())){
+                        order.setOrderid(orderList.get(i).getOrderid());
+                        order.setOrderdate(orderList.get(i).getOrderdate());
+                        order.setShippingaddress(orderList.get(i).getShippingaddress());
+                        order.setGrandtotal(orderList.get(i).getGrandtotal());
+                        order.setPaymentid(orderList.get(i).getPaymentid());
+                        order.setOrderstatus(orderList.get(i).getOrderstatus());
+                    
+                    }
+                }
+                
+                    session.setAttribute("orderAcc", order);
+
+            }catch (Exception ex) {
+                Logger.getLogger(CustomerOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
-          
-       }
-       public List<Ordertable> getAllOrders() {
+    }
+
+        
+    public List<Ordertable> getAllOrders() {
         List orderList = em.createNamedQuery("Ordertable.findAll").getResultList();
         return orderList;
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

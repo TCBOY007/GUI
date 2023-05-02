@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
+
 
 import entity.Customer;
 import entity.CustomerService;
-import entity.OrderService;
-import entity.Ordertable;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +15,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,54 +23,54 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.TransactionRolledbackException;
 import javax.transaction.UserTransaction;
 
 /**
- *
- * @author xinying
+ * Servlet implementation class NewPassword
  */
-@WebServlet(name = "CustomerProfile", urlPatterns = {"/CustomerProfile"})
-public class CustomerProfile extends HttpServlet {
 
+@WebServlet(name = "newPassword", urlPatterns = {"/newPassword"})
+public class NewPassword extends HttpServlet {
     @PersistenceContext
     EntityManager em;
     @Resource
     UserTransaction utx;
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        try{
-            
-            HttpSession session = request.getSession();
-            //get the customer from jsp
-           Customer customer = (Customer) session.getAttribute("customerAcc");
-          
-           if(customer == null){
-                response.sendRedirect("CustomerLogin.jsp");
-                
-            }else{
-                CustomerService custService = new CustomerService(em);
-                Customer showCustomer = custService.findByCustomerid(customer.getCustomerid());
-                session.setAttribute("customer", showCustomer);
-               
-                List<Ordertable> orderList = getAllOrders();
-                
-                session.setAttribute("orderList", orderList);
-                response.sendRedirect("CustomerProfile.jsp");
-            }
-            
-        }catch (Exception ex) {
-                Logger.getLogger(CustomerProfile.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          
-       }
-       public List<Ordertable> getAllOrders() {
-        List orderList = em.createNamedQuery("Ordertable.findAll").getResultList();
-        return orderList;
-    }
     
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    PrintWriter out = response.getWriter();
+
+    HttpSession session = request.getSession();
+    String newPassword = request.getParameter("resetpw1");
+    String confPassword = request.getParameter("resetpw2");
+    String email = (String) session.getAttribute("email");
+    CustomerService custService = new CustomerService(em);
+
+    try {
+        // Retrieve the customer with the specified email
+        List<Customer> custList = custService.findByEmail(email);
+        if (!custList.isEmpty()) {
+            Customer customer = custList.get(0);
+            customer.setPassword(newPassword);
+            
+            utx.begin();
+            em.merge(customer);
+            utx.commit();
+ 
+            RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerLogin.jsp");
+            dispatcher.forward(request, response);
+
+        } else {
+            throw new Exception("Customer not found");
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(NewPassword.class.getName()).log(Level.SEVERE, null, ex);
+        ex.printStackTrace();
+    }
+}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -113,3 +112,5 @@ public class CustomerProfile extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

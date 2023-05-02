@@ -5,7 +5,7 @@
 package controller;
 
 import entity.Customer;
-import entity.Order1;
+import entity.Ordertable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
