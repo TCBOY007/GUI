@@ -1,0 +1,189 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+  }
+  body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+.head{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 30px;
+    margin: 30px;
+}
+
+.head h1{
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 42px;
+    text-align: center;
+
+    color: #051F6C;
+    padding-bottom: 10px;
+}
+
+.head .username{
+    text-align: center;
+    font-size: 14px;
+    line-height: 12px;
+    color:#234cc7;
+}
+
+.container{
+    display:flex;
+    background-color:  #F6F8FD;
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  
+  }
+
+.container .title{
+    font-size: 24px;
+    font-weight: 500;
+    position: fixed;
+    top: 260px;
+    left:200px;
+    
+    color:#051F6C;
+    display:flex;
+  }
+  
+ .msg {
+        padding: 5px;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        clear: both;
+        padding-top: 20px;
+    }
+
+
+.content form .custDetails{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 70px 20px 20px 20px;
+
+  }
+
+form .custDetails .inputBox{
+
+    margin-bottom: 30px;
+    width: calc(100% / 2 - 30px);
+  }
+
+form .custDetails .inputBox2{
+
+    margin-bottom: 30px;
+    width:100%;
+  }
+
+form .inputBox span.details{
+    display: block;
+  
+    margin-bottom: 10px;
+    color:#0f266d;
+    font-size: 10px;
+    font-family: 'Familjen Grotesk';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 15px;
+}
+
+form .inputBox2 span.details{
+    display: block;
+  
+    margin-bottom: 10px;
+    color:#0f266d;
+    font-size: 10px;
+    font-family: 'Familjen Grotesk';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 15px;
+}
+  
+.custDetails .inputBox input{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 12px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0px 4px 4px #C5D2FA;
+    margin-top: 3px;
+    
+  }
+
+.custDetails .inputBox2 input{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 12px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0px 4px 4px #C5D2FA;
+    margin-top: 3px;
+    
+  }
+
+form .buttonDiv{
+    width: 100%;
+    height:40px;
+    text-align: right;
+  }
+form .buttonDiv input{
+    height:90%;
+    width: 15%;
+    border-radius: 5px;
+    border:none;
+    color: #051F6C;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background: #dbe2fa;
+    margin:0 20px 0 20px;
+  }
+
+form .buttonDiv input:hover{
+    opacity: 0.5;
+}
+
+form .buttonDiv a{
+    font-family: 'Akshar';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 11px;
+    letter-spacing: 0.05em;
+    text-decoration-line: underline;
+    color: #5174db;
+}
+
+.showPassword{
+    display:relative;
+    margin-right: 150px;
+}
