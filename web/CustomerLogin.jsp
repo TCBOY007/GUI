@@ -11,7 +11,7 @@
         <title>Login Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="LoginPage.css" type="text/css" rel="stylesheet" />
+        <link href="css/LoginPage.css" type="text/css" rel="stylesheet" />
    
     </head>
     <body>
@@ -33,7 +33,7 @@
             
             <input style="margin-bottom: 10px;" type="checkbox" onclick="viewPassword()"><span style="margin: 10px;">Show Password</span>
             <input style="margin-top: 10px;" type="submit" value="Login">
-            <div class="forgotPass"><a href="#" >Forgot Password?</a></div>
+            <div class="forgotPass"><a href="forgotPassword.jsp">Forgot Password?</a></div>
 
             
             <div class="signup_link">

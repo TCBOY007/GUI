@@ -15,7 +15,7 @@
     <!---<title> Responsive Registration Form | CodingLab </title>--->
     <link rel="stylesheet" href="style.css">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="CustomerRegister.css" type="text/css" rel="stylesheet" />
+     <link href="css/CustomerRegister.css" type="text/css" rel="stylesheet" />
    </head>
 <body>
 
@@ -236,6 +236,7 @@ function passwordVerify() {
             var password2 = document.getElementById("password2");
             if (password.type == "password" && password2.type == "password") {
                 password.type = "text";
+                password2.type = "text";
             } else {
                 password.type = "password";
             }
@@ -245,5 +246,3 @@ function passwordVerify() {
 
 </body>
 </html>
-
-

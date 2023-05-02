@@ -9,9 +9,9 @@
 
     <meta name="author" content="Codeconvey" />
     <!-- Message Box CSS -->
-    <link rel="stylesheet" href="regConfirm1.css">
+    <link rel="stylesheet" href="css/regConfirm1.css">
     <!--Only for demo purpose - no need to add.-->
-    <link rel="stylesheet" href="regConfirm2.css" />
+    <link rel="stylesheet" href="css/regConfirm2.css" />
 	
 </head>
 <body>

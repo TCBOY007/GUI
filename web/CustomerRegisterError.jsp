@@ -9,9 +9,9 @@
 
     <meta name="author" content="Codeconvey" />
     <!-- Message Box CSS -->
-    <link rel="stylesheet" href="loginError1.css">
+    <link rel="stylesheet" href="css/loginError1.css">
     <!--Only for demo purpose - no need to add.-->
-    <link rel="stylesheet" href="loginError2.css" />
+    <link rel="stylesheet" href="css/loginError2.css" />
 	
 </head>
 <body>
