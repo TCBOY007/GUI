@@ -58,6 +58,7 @@
 
 
         <section>
+            
             <div>
                 <h1 id="shopping-cart-word">SHOPPING CART</h1>
 
@@ -259,7 +260,7 @@
                 calculateTotal();
 
                 submitForm();
-
+                
 
             }
 
@@ -292,7 +293,6 @@
 
             // function for calculate total price 
             function calculateTotal() {
-                checkZeroQuantity();
                 var total = 0;
                 var products = document.getElementsByClassName("product");
                 for (var i = 0; i < products.length; i++) {
@@ -422,21 +422,12 @@
 
             }
 
-            function resetPositionIfNoCart() {
-                const table = document.getElementById("cartTable");
-                const rows = table.getElementsByTagName("tr");
-
-                if (rows.length === 0) {
-                    window.scrollTo(0, 0);
-                } 
-
-            }
 
 
 
             window.onload = function () {
+                checkZeroQuantity();
                 calculateTotal();
-                resetPositionIfNoCart();
                 backPosition();
             };
 
