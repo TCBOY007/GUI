@@ -43,6 +43,9 @@
             <div class="loginStaff">
                 <a href=".jsp">Login as Staff</a>
             </div>
+            <div class="homepage">
+                <a href="#">Back To Home Page</a>
+            </div>
         </form>
     </div>
 
