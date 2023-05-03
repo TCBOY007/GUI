@@ -173,11 +173,37 @@ input[type="submit"]:hover {
     letter-spacing: 0.05em;
     color: #5174db;
     text-decoration: none;
+    margin-bottom: 100px;
 
 }
 .loginStaff a:hover {
     opacity: 0.5;
 }
+
+.homepage {
+    text-align: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+    
+}
+
+.homepage a{
+    
+    font-family: 'Akshar';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 11px;
+    letter-spacing: 0.05em;
+    color: #5174db;
+    text-decoration: none;
+    margin-bottom: 100px;
+
+}
+.homepage a:hover {
+    opacity: 0.5;
+}
+
 
 form .success-message p{
     text-align: center;
