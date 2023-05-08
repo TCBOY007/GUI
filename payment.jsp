@@ -4,6 +4,7 @@
     Author     : chook
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*"%>
 <%@page import="java.util.*"%>
@@ -13,6 +14,7 @@
 <% session.setAttribute("cartDetails", cartDetails);%>
 <% session.setAttribute("customerInfo", cust);%>
 <% Boolean updateStatus = (Boolean) session.getAttribute("updateStatus");%>
+
 
 
 <!DOCTYPE html>
@@ -56,16 +58,24 @@
         <!-- this is header  -->
         <jsp:include page="header.jsp" />
 
+        <%!
 
+            public String convert2dp(double valueToChange) {
+
+                DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+                String formattedDouble = decimalFormat.format(valueToChange);
+                return formattedDouble;
+            }
+        %>
         <section>
-            
+
             <div>
                 <h1 id="shopping-cart-word">SHOPPING CART</h1>
 
                 <form id="updateQtt" method="post">
 
 
-                    <div id="informAutoDelete">If the quantity become 0, the product will be auto deleted</div>
+                    <div id="informAutoDelete">If the quantity become 0, the product will be auto remove</div>
                     <table id="cartTable" class="table-details">
                         <thead id="title-word">
                             <tr >
@@ -77,22 +87,37 @@
                         </thead>
 
 
-                        <tbody>
+                        <tbody id="tBody">
 
 
-                            <% for (int i = 0; i < cartDetails.size(); i++) {
+                            <%
+                                
+                                    boolean check = false;
+                                     
+                                    for (int i = 0; i < cartDetails.size(); i++) {
 
+                                    
                                     for (int j = 0; j < prodDetails.size(); j++) {
 
                                         if (cartDetails.get(i).getProductid().getProductid().equals(prodDetails.get(j).getProductid())) {
 
+                                            if(cartDetails.get(i).getQuantity() > 0){
+                                                check = true;
 
                             %>
                             <tr class="product" id="product<%=i%>">
                                 <td class="product-details" scope="row">
                                     <div class="single-product-details">
-                                        <img class="product-image"  src="images/book_thinkingSlow.png"
+                                        
+                                        <%
+                                             if(cartDetails.get(i).getProductid().getProductid().equals(prodDetails.get(j).getProductid())) {
+                                        %>
+                                        <img class="product-image"  src="/image/<%= prodDetails.get(j).getProductid()%>"
                                              style="width: 120px;" alt="Book">
+                                        
+                                        <%
+                                            }
+                                        %>
                                         <div class="product-name" >
                                             <p>Title  :<span class="single-product-name"> <%=prodDetails.get(j).getBookname()%> </span></p>
                                             <p>Author :<span class="single-product-author"><%=prodDetails.get(j).getAuthor()%></span></p>
@@ -117,17 +142,20 @@
 
 
                                 <td class="price" >
-                                    <p>RM <span id="price_product<%=i%>"> <%= prodDetails.get(j).getPrice()%> </span></p>
+                                    <p>RM <span id="price_product<%=i%>"> <%= convert2dp(prodDetails.get(j).getPrice())%> </span></p>
                                 </td>
                             </tr>
 
 
                             <%
+                                }
                                         }
 
                                     }
 
                                 }
+
+System.out.println("boolean check is " + check);
                             %>
 
                         </tbody>
@@ -207,14 +235,20 @@
                             <span id="totalPriceAfterTax" class="value"></span>
                             <input type="hidden" name="totalAmount" id="hiddenField" value="">
                         </div>
-                        <input id="pay_button" class="pay-button" type="submit" value="Pay now">
+                        <% if(check == true){ %>
+                            <input id="pay_button" class="pay-button" type="submit" value="Pay now">
+                        <% }else{ %>
+                            <input id="pay_button" class="pay-button" type="submit" value="Pay now" style="display: none">
+                        <% }%>
                     </div>
 
+                    
+                    
                 </section>
 
             </form>
         </section>
-
+                            
 
         <!-- This is footer -->
         <jsp:include page="footer.jsp" />
@@ -260,7 +294,7 @@
                 calculateTotal();
 
                 submitForm();
-                
+
 
             }
 
@@ -278,17 +312,6 @@
 
             }
 
-            function checkZeroQuantity() {
-                var products = document.getElementsByClassName("product");
-                for (var i = 0; i < products.length; i++) {
-                    var productRow = document.getElementById(products[i].id);
-                    var quantity = parseInt(document.getElementById("quantity_" + products[i].id).value);
-
-                    if (quantity === 0) {
-                        productRow.remove();
-                    }
-                }
-            }
 
 
             // function for calculate total price 
@@ -302,13 +325,12 @@
                     if (!isNaN(price) && !isNaN(quantity)) {
                         total += price * quantity;
                     }
+                    
                 }
-
-                if (total === 0) {
-                    var payButton = document.getElementById("pay_button");
-                    payButton.parentNode.removeChild(payButton);
-
-                }
+                
+                
+                document.getElementById("demoTest").innerHTML = total;
+                
 
                 var totalAfterTax = total;
 
@@ -424,9 +446,7 @@
 
 
 
-
             window.onload = function () {
-                checkZeroQuantity();
                 calculateTotal();
                 backPosition();
             };
